@@ -2,4 +2,7 @@
 /Debug/
 nRF5_SDK_17.0.2_d674dde/**
 *.emSession
-**/ses/Output/
+**/Output/
+*.zip
+*.hex
+*.exe

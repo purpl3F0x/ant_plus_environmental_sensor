@@ -1,6 +1,18 @@
 <!DOCTYPE CrossStudio_Project_File>
-<solution Name="env_sensor" target="8" version="2">
-  <project Name="env_sensor">
+<solution Name="sensor_application_s312" target="8" version="2">
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_optimization_level="Optimize For Size"
+    link_time_optimization="No" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG; DEBUG_NRF"
+    gcc_optimization_level="None" />
+  <configuration
+    Name="Common"
+    macros="SDK_ROOT=..\\..\\..\\..\\nRF5_SDK_17.0.2_d674dde" />
+  <project Name="sensor_application_s312">
     <configuration
       Name="Common"
       arm_architecture="v7EM"
@@ -131,22 +143,13 @@
     </folder>
     <configuration
       Name="Release"
-      c_preprocessor_definitions="NRF_LOG_DEFAULT_LEVEL=0" />
+      c_additional_options=""
+      c_preprocessor_definitions="NRF_LOG_DEFAULT_LEVEL=0"
+      gcc_debugging_level="None"
+      gcc_optimization_level="Level 3 for more speed" />
     <configuration
       Name="Debug"
       build_output_directory="../../../../$(Configuration)/$(ProjectName)"
       debug_additional_load_file="$(SDK_ROOT)/components/softdevice/s312/ANT_s312_nrf52810_6.1.1.hex" />
   </project>
-  <configuration
-    Name="Release"
-    c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size"
-    link_time_optimization="No" />
-  <configuration
-    Name="Debug"
-    c_preprocessor_definitions="DEBUG; DEBUG_NRF"
-    gcc_optimization_level="None" />
-  <configuration
-    Name="Common"
-    macros="SDK_ROOT=..\\..\\..\\..\\nRF5_SDK_17.0.2_d674dde" />
 </solution>
