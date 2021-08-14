@@ -175,5 +175,5 @@
     link_time_optimization="No" />
   <configuration
     Name="Common"
-    macros="SDK_ROOT=..\\..\\..\\nRF5_SDK_17.0.2_d674dde" />
+    macros="SDK_ROOT=../../../nRF5_SDK_17.0.2_d674dde" />
 </solution>

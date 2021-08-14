@@ -11,7 +11,7 @@
     gcc_optimization_level="None" />
   <configuration
     Name="Common"
-    macros="SDK_ROOT=..\\..\\..\\..\\nRF5_SDK_17.0.2_d674dde" />
+    macros="SDK_ROOT=../../../../nRF5_SDK_17.0.2_d674dde" />
   <project Name="sensor_application_s312">
     <configuration
       Name="Common"
