@@ -6,3 +6,5 @@ nRF5_SDK_17.0.2_d674dde/**
 *.zip
 *.hex
 *.exe
+*.jlink
+/bootloader/dfu_public_key.c
