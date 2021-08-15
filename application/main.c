@@ -84,8 +84,10 @@ static void dont_hlt_but_catch_fire(void);
 ENV_SENS_CHANNEL_CONFIG_DEF(m_ant_env,
                             ENV_CHANNEL_NUMBER,
                             CHAN_ID_TRANS_TYPE,
-                            CHAN_ID_DEV_NUM,
+                            0,
                             ANTPLUS_NETWORK_NUM);
+
+
 ENV_SENS_PROFILE_CONFIG_DEF(m_ant_env,
                             ANT_ENV_PAGE_1,
                             ant_env_evt_handler);
@@ -259,15 +261,18 @@ static void profile_setup(void)
 /** @snippet [ANT ENV TX Profile Setup] */
     ret_code_t err_code;
 
+    m_ant_env_channel_env_sens_config.device_number = CHAN_ID_DEV_NUM;
+
     err_code = ant_env_sens_init(&m_ant_env,
                                  ENV_SENS_CHANNEL_CONFIG(m_ant_env),
                                  ENV_SENS_PROFILE_CONFIG(m_ant_env));
     APP_ERROR_CHECK(err_code);
     
     m_ant_env.page_0.supported_pages = 0b0011;
+
     m_ant_env.page_0.default_trans_rate = ANT_ENV_PAGE_0_TRANS_RATE_4_HZ;
-    m_ant_env.page_80.manufacturer_id = ENV_MFG_ID;   // development� manufacturer ID
-    m_ant_env.page_81.serial_number = NRF_FICR->DEVICEID[0];;
+    m_ant_env.page_80.manufacturer_id = ENV_MFG_ID;   // development manufacturer ID
+    m_ant_env.page_81.serial_number = NRF_FICR->DEVICEID[0];
     m_ant_env.page_80.hw_revision = ENV_HW_VERSION;
     m_ant_env.page_81.sw_revision_major = ENV_SW_VERSION_MAJOR;
     m_ant_env.page_81.sw_revision_minor = ENV_SW_VERSION_MAJOR;
