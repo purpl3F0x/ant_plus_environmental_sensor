@@ -207,9 +207,7 @@ void ant_env_evt_handler(ant_env_profile_t * p_profile, ant_env_evt_t event)
         case ANT_ENV_PAGE_70_REQUESTED:
           if (p_profile->page_70.page_number == ANT_ENV_PAGE_82)
           {
-              NRF_LOG_INFO("Battery Page Was Requested");
               nrf_drv_saadc_sample();   // Sample for the upcoming data page
-              dont_hlt_but_catch_fire();
           }
 
         case ANT_ENV_PAGE_73_REQUESTED:
