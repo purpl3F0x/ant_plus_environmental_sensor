@@ -61,6 +61,10 @@
 #include "nrf_bootloader_info.h"
 #include "nrf_delay.h"
 
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
 
 static void on_error(void)
 {
@@ -128,6 +132,16 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
 int main(void)
 {
     uint32_t ret_val;
+
+    ret_val = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(ret_val);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("Hello from the Bootlader");
+    NRF_LOG_FLUSH();
+
+    NRF_LOG_INFO("Soft Device  Info: \t%u %u", SD_ID_GET(MBR_SIZE), SD_VERSION_GET(MBR_SIZE));
+    
 
     // Must happen before flash protection is applied, since it edits a protected page.
     nrf_bootloader_mbr_addrs_populate();
