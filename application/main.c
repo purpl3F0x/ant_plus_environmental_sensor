@@ -130,7 +130,6 @@ void saadc_event_handler(nrf_drv_saadc_evt_t const * p_event)
     {
         nrf_saadc_value_t adc_result;
         uint16_t          batt_lvl_in_milli_volts;
-        uint8_t           percentage_batt_lvl;
 
         adc_result = p_event->data.done.p_buffer[0];
 
