@@ -174,7 +174,7 @@ void bme280_handler(void)
     raw_p = bme280_get_pressure();
     raw_h = bme280_get_humidity();
 
-    //NRF_LOG_INFO("Temp: "NRF_LOG_FLOAT_MARKER " %�C", NRF_LOG_FLOAT(raw_t / 100.0));
+    //NRF_LOG_INFO("Temp: "NRF_LOG_FLOAT_MARKER " *C", NRF_LOG_FLOAT(raw_t / 100.0));
     //NRF_LOG_INFO("Hum : " NRF_LOG_FLOAT_MARKER " %%Rh", NRF_LOG_FLOAT(raw_h / 1024.0));
     //NRF_LOG_INFO("Pres: " NRF_LOG_FLOAT_MARKER " hPa\n\r", NRF_LOG_FLOAT(raw_p / 256.0));
     //NRF_LOG_FLUSH();
@@ -208,12 +208,14 @@ void ant_env_evt_handler(ant_env_profile_t * p_profile, ant_env_evt_t event)
           {
               nrf_drv_saadc_sample();   // Sample for the upcoming data page
           }
+          break;
 
         case ANT_ENV_PAGE_73_REQUESTED:
           if (p_profile->page_73.command_number == DFU_MAGIC_COMMAND)
           {
               dont_hlt_but_catch_fire();
           }
+          break;
 
         case ANT_ENV_PAGE_81_UPDATED:
           break;
@@ -373,7 +375,7 @@ int main(void)
     NRF_LOG_INFO("BME280 Sesnsor Started");
     NRF_LOG_FLUSH();
     
-    APP_ERROR_CHECK(app_timer_start(bme_timer_id, APP_TIMER_TICKS(500), NULL));
+    APP_ERROR_CHECK(app_timer_start(bme_timer_id, APP_TIMER_TICKS(1000), NULL));
     APP_ERROR_CHECK(app_timer_start(battery_timer_id, APP_TIMER_TICKS(10000), NULL));
 
  

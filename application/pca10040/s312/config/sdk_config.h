@@ -50,6 +50,12 @@
 
 
 //==========================================================
+// <o> ANT_PLUS_NETWORK_KEY - ANT PLUS network key (https://www.thisisant.com/developer/ant-plus/ant-plus-basics/network-keys). 
+#ifndef ANT_PLUS_NETWORK_KEY
+#define ANT_PLUS_NETWORK_KEY {0xB9, 0xA5, 0x21, 0xFB, 0xBD, 0x72, 0xC3, 0x45}
+#endif   
+
+//==========================================================
 // <o> ANTPLUS_NETWORK_NUM - ANT PLUS network number. 
 #ifndef ANTPLUS_NETWORK_NUM
 #define ANTPLUS_NETWORK_NUM 0
@@ -70,16 +76,6 @@
 #define ENV_CHANNEL_NUM 0
 #endif
 
-// <o> MODIFICATION_TYPE  - Type of Heart Rate values update
- 
-
-// <i> They can be updated by buttons or periodically rise and fall in auto mode
-// <0=> MODIFICATION_TYPE_BUTTON 
-// <1=> MODIFICATION_TYPE_AUTO 
-
-#ifndef MODIFICATION_TYPE
-#define MODIFICATION_TYPE 0
-#endif
 
 // <h> PRODUCT_INFORMATION 
 
@@ -1995,7 +1991,7 @@
 // <e> NRF_LOG_BACKEND_RTT_ENABLED - nrf_log_backend_rtt - Log RTT backend
 //==========================================================
 #ifndef NRF_LOG_BACKEND_RTT_ENABLED
-#define NRF_LOG_BACKEND_RTT_ENABLED 0
+#define NRF_LOG_BACKEND_RTT_ENABLED 1
 #endif
 // <o> NRF_LOG_BACKEND_RTT_TEMP_BUFFER_SIZE - Size of buffer for partially processed strings. 
 // <i> Size of the buffer is a trade-off between RAM usage and processing.
