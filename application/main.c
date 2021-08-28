@@ -269,7 +269,7 @@ static void profile_setup(void)
     
     m_ant_env.page_0.supported_pages = 0b0011;
 
-    m_ant_env.page_0.default_trans_rate = ANT_ENV_PAGE_0_TRANS_RATE_4_HZ;
+    m_ant_env.page_0.transmission_info.default_trans_rate = ANT_ENV_PAGE_0_TRANS_RATE_4_HZ;
     m_ant_env.page_80.manufacturer_id = ENV_MFG_ID;   // development manufacturer ID
     m_ant_env.page_81.serial_number = NRF_FICR->DEVICEID[0];
     m_ant_env.page_80.hw_revision = ENV_HW_VERSION;
@@ -289,8 +289,8 @@ static void profile_setup(void)
     err_code = ant_env_sens_open(&m_ant_env);
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_state_indicator_channel_opened();
-    APP_ERROR_CHECK(err_code);
+    //err_code = ant_state_indicator_channel_opened();
+    //APP_ERROR_CHECK(err_code);
 /** @snippet [ANT ENV TX Profile Setup] */
 }
 
@@ -356,7 +356,7 @@ int main(void)
     APP_ERROR_CHECK(app_timer_create(&bme_timer_id, APP_TIMER_MODE_REPEATED, do_measurment_timer));
     APP_ERROR_CHECK(app_timer_create(&battery_timer_id, APP_TIMER_MODE_REPEATED, battery_timer_handler));
     
-    bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, NULL);
+    bsp_init(BSP_INIT_LEDS, NULL);
 
     battery_timer_handler(NULL);
     do_measurment_timer(NULL);
