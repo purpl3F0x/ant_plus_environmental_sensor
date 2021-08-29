@@ -182,7 +182,7 @@ void bme280_handler(void)
     m_ant_env.page_1.current_temp = raw_t;
     m_ant_env.page_84.data_field_1 = (raw_h * 100) / 1024;
     m_ant_env.page_84.data_field_2 = (raw_p) / 2560;
-
+    m_ant_env.page_1.event_count++;
 
 }
 
@@ -200,7 +200,6 @@ void ant_env_evt_handler(ant_env_profile_t * p_profile, ant_env_evt_t event)
           break;
 
         case ANT_ENV_PAGE_1_UPDATED:
-          m_ant_env.page_1.event_count++;
           break;
 
         case ANT_ENV_PAGE_70_REQUESTED:
