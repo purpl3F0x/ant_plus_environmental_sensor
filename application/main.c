@@ -140,7 +140,7 @@ void saadc_event_handler(nrf_drv_saadc_evt_t const * p_event)
         NRF_LOG_INFO("Battery Voltage %u mV", batt_lvl_in_milli_volts);
         
         // Update page 82
-        m_ant_env.page_82.fract_bat_volt = batt_lvl_in_milli_volts % 1000;
+        m_ant_env.page_82.fract_bat_volt = (batt_lvl_in_milli_volts % 1000 ) / 4;
         m_ant_env.page_82.descriptive_bit_field.coarse_bat_volt = batt_lvl_in_milli_volts / 1000;
 
         // based on battery_level_in_percent() inaccuracy is key here ;)
