@@ -128,7 +128,7 @@
 // <e> ANT_ENV_LOG_ENABLED - Enables general logging in the module.
 //==========================================================
 #ifndef ANT_ENV_LOG_ENABLED
-#define ANT_ENV_LOG_ENABLED 1
+#define ANT_ENV_LOG_ENABLED 0
 #endif
 // <o> ANT_ENV_LOG_LEVEL  - Default Severity level
  

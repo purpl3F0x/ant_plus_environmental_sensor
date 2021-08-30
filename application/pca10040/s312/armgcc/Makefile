@@ -14,6 +14,7 @@ SRC_FILES += \
 $(PROJ_DIR)/main.c \
 $(PROJ_DIR)/bme280.c \
 $(PROJ_DIR)/spi.c \
+$(PROJ_DIR)/24hr_temp_logger.c \
 $(SDK_ROOT)/components/ant/ant_channel_config/ant_channel_config.c \
 $(SDK_ROOT)/components/ant/ant_key_manager/ant_key_manager.c \
 $(SDK_ROOT)/components/ant/ant_profiles/ant_common/ant_request_controller/ant_request_controller.c \

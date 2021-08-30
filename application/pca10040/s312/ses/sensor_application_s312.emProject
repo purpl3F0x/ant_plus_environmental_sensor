@@ -108,6 +108,7 @@
     <folder Name="Application">
       <file file_name="../../../main.c" />
       <file file_name="../config/sdk_config.h" />
+      <file file_name="../../../24hr_temp_logger.c" />
     </folder>
     <folder Name="nRF_Segger_RTT">
       <file file_name="$(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c" />

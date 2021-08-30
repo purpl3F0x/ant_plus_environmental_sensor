@@ -14,6 +14,7 @@
 #include "nrf_nvic.h"
 #include "nrf_strerror.h"
 #include "nrf.h"
+#include "nrf_ringbuf.h"
 
 #include "nordic_common.h"
 //#include "nrf_sdh_soc.h"
@@ -48,6 +49,7 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#include "24hr_temp_logger.h"
 
 #define BME280_HUMIDITY_OVERSAMPLING    BME280_OVERSAMPLING_8
 #define BME280_TEMPERATURE_OVERSAMPLING BME280_OVERSAMPLING_4
@@ -70,16 +72,15 @@
 
 static volatile bool measure = true;
 static nrf_saadc_value_t adc_buf[2];
-//volatile int32_t max_24h_temp;
-//volatile int32_t min_24h_temp;
-//volatile int32_t max_24h_temp;
+static int16_t period_max = INT16_MIN;
+static int16_t period_min = INT16_MAX;
 
 
 /** @snippet [ANT ENV TX Instance] */
 void ant_env_evt_handler(ant_env_profile_t * p_profile, ant_env_evt_t event);
 
-
 static void dont_hlt_but_catch_fire(void);
+
 
 ENV_SENS_CHANNEL_CONFIG_DEF(m_ant_env,
                             ENV_CHANNEL_NUMBER,
@@ -102,22 +103,37 @@ NRF_SDH_ANT_OBSERVER(m_ant_observer, ANT_ENV_ANT_OBSERVER_PRIO,
 
 APP_TIMER_DEF(bme_timer_id);
 APP_TIMER_DEF(battery_timer_id);
+APP_TIMER_DEF(temp_logger_id);
 
 
 uint32_t get_rtc_counter_ms(void)
 {
     return NRF_RTC1->COUNTER * 1000 * (APP_TIMER_CONFIG_RTC_FREQUENCY + 1) / APP_TIMER_CLOCK_FREQ;
-;
 }
 
-void do_measurment_timer (void * p_context) {
-    if (measure == false)
-        measure = true;
+void do_measurment_timer (void * p_context) 
+{
+    if (measure == false)  measure = true;
 }
 
-void battery_timer_handler (void * p_context) {
+void battery_timer_handler (void * p_context) 
+{
     nrf_drv_saadc_sample();
 }
+
+
+void temp_logger_handler(void *p_context)
+{
+  logger_push_min_max(period_min, period_max);
+  logger_find_min();
+  logger_find_max();
+
+  
+  // Hmmm ... Should reset ?? 
+  period_max = INT16_MIN;
+  period_min = INT16_MAX;
+}
+
 
 /**@brief Function for handling the ADC interrupt.
  *
@@ -176,13 +192,20 @@ void bme280_handler(void)
 
     //NRF_LOG_INFO("Temp: "NRF_LOG_FLOAT_MARKER " *C", NRF_LOG_FLOAT(raw_t / 100.0));
     //NRF_LOG_INFO("Hum : " NRF_LOG_FLOAT_MARKER " %%Rh", NRF_LOG_FLOAT(raw_h / 1024.0));
-    //NRF_LOG_INFO("Pres: " NRF_LOG_FLOAT_MARKER " hPa\n\r", NRF_LOG_FLOAT(raw_p / 256.0));
+    //NRF_LOG_INFO("Pres: " NRF_LOG_FLOAT_MARKER " hPa\n\r", NRF_LOG_FLOAT(raw_p / 2560.0));
     //NRF_LOG_FLUSH();
 
     m_ant_env.page_1.current_temp = raw_t;
     m_ant_env.page_84.data_field_1 = (raw_h * 100) / 1024;
     m_ant_env.page_84.data_field_2 = (raw_p) / 2560;
     m_ant_env.page_1.event_count++;
+
+    period_max = logger_max(period_max, (raw_t + 5) / 10);    // Add 5 to round up when temp > .05
+    period_min = logger_min(period_min, raw_t / 10);
+    
+    m_ant_env.page_1._24_hour_high = logger_max(period_max, logger_get_max());
+    m_ant_env.page_1._24_hour_low = logger_min(period_min, logger_get_min());
+
 
 }
 
@@ -354,6 +377,7 @@ int main(void)
     APP_ERROR_CHECK(app_timer_init());
     APP_ERROR_CHECK(app_timer_create(&bme_timer_id, APP_TIMER_MODE_REPEATED, do_measurment_timer));
     APP_ERROR_CHECK(app_timer_create(&battery_timer_id, APP_TIMER_MODE_REPEATED, battery_timer_handler));
+    APP_ERROR_CHECK(app_timer_create(&temp_logger_id, APP_TIMER_MODE_REPEATED, temp_logger_handler));
     
     bsp_init(BSP_INIT_LEDS, NULL);
 
@@ -369,14 +393,15 @@ int main(void)
     bme280_set_interval(BME280_DELAY);
     bme280_set_mode(BME280_MODE_NORMAL);
   
-    
+    logger_init();
 
     NRF_LOG_INFO("BME280 Sesnsor Started");
+    NRF_LOG_INFO("Logging Temp every: %u seconds", TEMP_LOGGER_INTERVAL_MS_PERIOD / 1000);
     NRF_LOG_FLUSH();
     
     APP_ERROR_CHECK(app_timer_start(bme_timer_id, APP_TIMER_TICKS(1000), NULL));
     APP_ERROR_CHECK(app_timer_start(battery_timer_id, APP_TIMER_TICKS(10000), NULL));
-
+    APP_ERROR_CHECK(app_timer_start(temp_logger_id, APP_TIMER_TICKS(TEMP_LOGGER_INTERVAL_MS_PERIOD), NULL));
  
     for (;;)
     {   
