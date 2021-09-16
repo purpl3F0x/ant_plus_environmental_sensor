@@ -1,0 +1,72 @@
+<resources>
+    <fitContributions>
+		<fitField id="0"
+	        displayInChart="true"
+	        sortOrder="10"
+	        precision="2"
+	        chartTitle="@Strings.tempLabel"
+	        dataLabel="@Strings.tempLabel"
+	        unitLabel="@Strings.tempUnits"
+	        fillColor="#FFE135" />
+	        
+		<fitField id="1"
+        	displayInActivitySummary="true"
+	        sortOrder="11"
+	        precision="2"
+	        dataLabel="@Strings.tempLabel"
+	        unitLabel="@Strings.tempUnits"/>
+	        
+	    <fitField id="2"
+	    	displayInActivitySummary="true"
+	        sortOrder="12"
+	        precision="2"
+	        dataLabel="@Strings.temp24HrMin"
+	        unitLabel="@Strings.tempUnits"/>
+	     
+	     <fitField id="3"
+	     	displayInActivitySummary="true"
+	        sortOrder="13"
+	        precision="2"
+	        dataLabel="@Strings.temp24HrMax"
+	        unitLabel="@Strings.tempUnits"/>
+	        
+	     <fitField id="4"
+	        displayInChart="true"
+	        sortOrder="14"
+	        precision="2"
+	        chartTitle="@Strings.humLabel"
+	        dataLabel="@Strings.humLabel"
+	        unitLabel="@Strings.humUnits"
+	        fillColor="#90FF90" />
+	        
+	     <fitField id="5"
+	        displayInChart="true"
+	        sortOrder="15"
+	        precision="0"
+	        chartTitle="@Strings.pressLabel"
+	        dataLabel="@Strings.pressLabel"
+	        unitLabel="@Strings.pressUnits"
+	        fillColor="#9457EB" />
+	        
+	     <fitField id="6"
+	     	displayInActivitySummary="true"
+	        sortOrder="16"
+	        precision="2"
+	        dataLabel="@Strings.humLabel"
+	        unitLabel="@Strings.humUnits"/>
+	     
+	     <fitField id="7"
+	     	displayInActivitySummary="true"
+	        sortOrder="17"
+	        precision="0"
+	        dataLabel="@Strings.pressLabel"
+	        unitLabel="@Strings.pressUnits"/>
+	        
+	     <fitField id="8"
+	     	displayInActivitySummary="true"
+	        sortOrder="18"
+	        dataLabel="@Strings.sensorBatteryStatus"
+	        unitLabel="@Strings.sensorBatteryStatusLabel"/>
+	        	        
+    </fitContributions>
+</resources>

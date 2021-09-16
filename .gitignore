@@ -14,3 +14,5 @@ nRF5_SDK_17.0.2_d674dde/**
 *.in
 *.map
 /bootloader/dfu_public_key.c
+
+enviromentSensorDataField/bin/

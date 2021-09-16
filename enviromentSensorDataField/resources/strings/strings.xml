@@ -1,0 +1,23 @@
+<strings>
+    <string id="AppName">Enviroment Sensor DataField</string>
+
+    <string id="tempLabel">Temperature</string>
+    <string id="humLabel">Humidity</string>
+    <string id="pressLabel">Barometric Pressure</string>
+    
+    <string id="tempLabelShort">Temp</string>
+	<string id="humLabelShort">Humidity</string>
+	<string id="pressLabelShort">Bar.Pres.</string>
+	
+	<string id="tempUnits">°C</string>
+	<string id="humUnits">%</string>
+	<string id="pressUnits">Pa</string>
+	
+	<string id="temp24HrMin">24 Hour Low Temperature</string>
+	<string id="temp24HrMax">24 Hour High Temperature</string>
+	
+	<string id="sensorBatteryStatus">Sensor Battery</string>
+	<string id="sensorBatteryStatusLabel"></string>
+	
+	
+</strings>
